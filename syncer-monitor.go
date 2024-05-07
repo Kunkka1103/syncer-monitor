@@ -11,7 +11,7 @@ import (
 
 var DSN = flag.String("dsn", "", "postgres dsn")
 var pushAddr = flag.String("push-addr", "", "Address of the Pushgateway to send metrics")
-var interval = flag.Int("interval", 10, "Interval in minutes to check the delay (default 1)")
+var interval = flag.Int("interval", 10, "Interval in minutes to check the URLs")
 
 func main() {
 	flag.Parse()
