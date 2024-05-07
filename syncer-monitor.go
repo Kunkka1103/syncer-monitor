@@ -10,13 +10,13 @@ import (
 )
 
 var DSN = flag.String("dsn", "", "postgres dsn")
-var pushAddr = flag.String("pushAddr", "", "pushAddr")
-var interval = flag.Int("interval", 10, "check interval(min)")
+var pushAddr = flag.String("push-addr", "", "Address of the Pushgateway to send metrics")
+var interval = flag.Int("interval", 10, "Interval in minutes to check the delay (default 1)")
 
 func main() {
 	flag.Parse()
 	if *DSN == "" || *pushAddr == "" {
-		log.Fatalln("dsn or pushAddr is empty")
+		log.Fatalln("dsn or push-addr is empty")
 	}
 
 	db, err := sqlexec.InitDB(*DSN)
