@@ -10,7 +10,7 @@ import (
 
 type Syncer struct {
 	Name  string
-	Epoch int
+	Epoch int64
 }
 
 func InitDB(DSN string) (DB *sql.DB, err error) {

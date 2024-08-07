@@ -35,9 +35,11 @@ func main() {
 
 		log.Println("syncers:", syncers)
 
+		height := CalculateHeight()
 		//TODO:push(syncers)
 		for _, syncer := range syncers {
-			err = prometh.Push(*pushAddr, syncer.Name, syncer.Epoch)
+			delay := height - syncer.Epoch
+			err = prometh.Push(*pushAddr, syncer.Name, delay)
 			if err != nil {
 				log.Println(err)
 			}
@@ -47,4 +49,21 @@ func main() {
 		time.Sleep(time.Duration(*interval) * time.Minute)
 	}
 
+}
+
+func CalculateHeight() int64 {
+	// 设置区块链初始时间（高度0的时间）
+	location, _ := time.LoadLocation("Asia/Shanghai")
+	startTime := time.Date(2020, 8, 25, 6, 0, 0, 0, location)
+
+	// 获取当前时间
+	currentTime := time.Now().In(location)
+
+	// 计算时间差（以秒为单位）
+	timeDifference := currentTime.Sub(startTime).Seconds()
+
+	// 计算当前高度
+	currentHeight := int64(timeDifference / 30)
+
+	return currentHeight
 }
